@@ -1,0 +1,37 @@
+.products-page {
+  padding: 24px;
+  width: 100%;
+}
+
+.products-page h1 {
+  margin-bottom: 24px;
+}
+
+.products-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+}
+
+.error {
+  color: #dc2626;
+}
+
+@media (max-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+}

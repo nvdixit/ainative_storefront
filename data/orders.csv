@@ -1,0 +1,9 @@
+order_id,order_date,status,subtotal_usd,shipping_usd,total_usd
+O5001,2026-05-02,Delivered,72.98,5.99,78.97
+O5002,2026-05-03,Delivered,199.99,0.00,199.99
+O5003,2026-05-04,Shipped,74.97,6.99,81.96
+O5004,2026-05-06,Delivered,92.98,5.99,98.97
+O5005,2026-05-08,Processing,249.99,0.00,249.99
+O5006,2026-05-10,Delivered,369.97,0.00,369.97
+O5007,2026-05-12,Delivered,67.97,5.99,73.96
+O5008,2026-05-15,Delivered,254.98,0.00,254.98

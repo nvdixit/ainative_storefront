@@ -1,0 +1,16 @@
+product_id,product_name,category,price_usd,inventory,brand,rating
+P1001,Wireless Ergonomic Mouse,Electronics,39.99,145,NovaTech,4.5
+P1002,Mechanical Keyboard,Electronics,89.99,72,NovaTech,4.7
+P1003,USB-C Docking Station,Electronics,129.99,38,PortWorks,4.4
+P1004,Noise-Canceling Headphones,Electronics,199.99,51,SoundPeak,4.8
+P1005,Smart Water Bottle,Fitness,34.99,210,HydraLife,4.2
+P1006,Yoga Mat Pro,Fitness,49.99,96,FlexCore,4.6
+P1007,Adjustable Dumbbell Set,Fitness,249.99,24,FlexCore,4.9
+P1008,Stainless Steel Tumbler,Home,24.99,180,EverSip,4.5
+P1009,LED Desk Lamp,Home,44.99,110,BrightNest,4.4
+P1010,Bamboo Cutting Board,Home,29.99,134,GreenCraft,4.3
+P1011,Ceramic Coffee Mug,Kitchen,14.99,320,ClayHouse,4.1
+P1012,Electric Milk Frother,Kitchen,54.99,67,BaristaPro,4.6
+P1013,Portable Bluetooth Speaker,Electronics,79.99,88,SoundPeak,4.7
+P1014,Laptop Stand,Office,32.99,141,WorkEase,4.5
+P1015,Weekly Planner Notebook,Office,12.99,290,PaperTrail,4.2

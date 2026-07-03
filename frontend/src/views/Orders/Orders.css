@@ -1,0 +1,29 @@
+.orders-page {
+  padding: 24px;
+  width: 100%;
+}
+
+.orders-page h1 {
+  margin-bottom: 16px;
+}
+
+.orders-table-wrapper {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(100vh - 200px);
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  table-layout: fixed;
+}
+
+.error {
+  color: #dc2626;
+}
+
