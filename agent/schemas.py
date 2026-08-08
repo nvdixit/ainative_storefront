@@ -27,6 +27,7 @@ FAVORITE_SCHEMA = {
             "type": "array",
             "items": {
                 "type": "string",
+                "pattern": "^P\\d{4}$"
             },
             "required": ["product_ids"]
         }

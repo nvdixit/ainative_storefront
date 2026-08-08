@@ -14,7 +14,7 @@ connection_string = "mongodb://localhost:27017/"
 @tool("load_products", return_direct=False)
 def load_products() -> list[Product]:
     '''
-    Load all products from the MongoDB database.
+    Use this tool to extract all products available for purchase.
     Args:
         connection_string: MongoDB connection URI.
     Returns:
@@ -42,7 +42,8 @@ def load_products() -> list[Product]:
 
 @tool("add_favorite_product", return_direct=True, args_schema=FAVORITE_SCHEMA)
 def add_favorite_product(product_ids: list[str]) -> dict:
-    """Add products to the Favorites collection in MongoDB.
+    """Use this tool to add products to the Favorites list of the user after looking up
+    the product IDs in the Products collection. This tool should be called after load_products to ensure that the product IDs are valid.
 
     Args:
         product_ids: List of product IDs to be added to favorites.
@@ -50,18 +51,24 @@ def add_favorite_product(product_ids: list[str]) -> dict:
     client = MongoClient(connection_string)
     db = client["TestAgentDataBase"]
     favorites_collection = db["Favorites"]
+    products_collection = db["Products"]
 
     for product_id in product_ids:
-        # Check if the product already exists in the Favorites collection
-        if not favorites_collection.find_one({"product_id": product_id}):
-            favorites_collection.insert_one({"product_id": product_id})
+        favorite = products_collection.find_one({"product_id": product_id})
+        exists = favorites_collection.find_one({"product_id": product_id})
+
+        if not exists:
+            favorites_collection.insert_one(favorite)
+        else:
+            return {"message": f"Looks like {product_id} is already in your favorites!"}
 
     return {"message": f"Products {', '.join(product_ids)} added to favorites successfully."}
 
 
 @tool("add_order", return_direct=True, args_schema=ORDER_SCHEMA)
 def add_order(subtotal_usd: float, products: list) -> dict:
-    """Use this tool second to insert a new order and its line items into MongoDB.
+    """Use this tool second after load_products to insert a new order and its line items into the database.
+       Do not add extra products to the order. Only add the products that the user has requested.
 
     Args:
         connection_string: MongoDB connection URI.
@@ -99,4 +106,4 @@ def add_order(subtotal_usd: float, products: list) -> dict:
         }
         orders_products_collection.insert_one(op_doc)
 
-    return {"message": f"Order {order_id} added successfully."}
+    return {"message": f"Ok, I ordered that for you! You can check {order_id} in your order history!"}

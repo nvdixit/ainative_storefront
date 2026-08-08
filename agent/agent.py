@@ -3,7 +3,7 @@ import json
 
 from langchain.agents import create_agent
 
-from agent.tools import load_products, add_order
+from agent.tools import add_favorite_product, load_products, add_order
 
 class Agent:
     class CustomResponse(BaseModel):
@@ -14,9 +14,11 @@ class Agent:
         with open("agent/add_order.md", "r") as f:
             system_prompt = f.read()
 
+        system_prompt = "You are a multi-step assistant for an e-commerce platform. You must call tools sequentially depending on what the user wants to do. You can call the following tools: load_products, add_order, add_favorite_product."
+
         # Keep the temperature low for more deterministic responses and reliable tool calling
         self.agent = create_agent(model="ollama:gemma4", 
-                                  tools=[load_products, add_order], 
+                                  tools=[load_products, add_order, add_favorite_product], 
                                   system_prompt=system_prompt,
                                   response_format=self.CustomResponse)
         
