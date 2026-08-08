@@ -3,6 +3,7 @@ from pymongo import MongoClient, MongoClient
 from objects.Order import Order
 from objects.OrderItem import OrderItem
 from objects.Product import Product
+from agent.schemas import ORDER_SCHEMA, FAVORITE_SCHEMA
 
 from langchain.tools import tool
 
@@ -38,27 +39,27 @@ def load_products() -> list[Product]:
 
     return {"result": products}
 
-order_schema = {
-    "type": "object",
-    "properties": {
-        "subtotal_usd": {"type": "number", "minimum": 0},
-        "products": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "product_id": {"type": "string", "pattern": "^P\\d{4}$"},
-                    "quantity": {"type": "integer", "minimum": 1},
-                    "unit_price_usd": {"type": "number", "minimum": 0},
-                },
-                "required": ["product_id", "quantity", "unit_price_usd"]
-            }
-        }
-    },
-    "required": ["subtotal_usd", "products"]
-}
 
-@tool("add_order", return_direct=True, args_schema=order_schema)
+@tool("add_favorite_product", return_direct=True, args_schema=FAVORITE_SCHEMA)
+def add_favorite_product(product_ids: list[str]) -> dict:
+    """Add products to the Favorites collection in MongoDB.
+
+    Args:
+        product_ids: List of product IDs to be added to favorites.
+    """
+    client = MongoClient(connection_string)
+    db = client["TestAgentDataBase"]
+    favorites_collection = db["Favorites"]
+
+    for product_id in product_ids:
+        # Check if the product already exists in the Favorites collection
+        if not favorites_collection.find_one({"product_id": product_id}):
+            favorites_collection.insert_one({"product_id": product_id})
+
+    return {"message": f"Products {', '.join(product_ids)} added to favorites successfully."}
+
+
+@tool("add_order", return_direct=True, args_schema=ORDER_SCHEMA)
 def add_order(subtotal_usd: float, products: list) -> dict:
     """Use this tool second to insert a new order and its line items into MongoDB.
 

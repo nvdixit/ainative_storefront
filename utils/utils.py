@@ -71,3 +71,30 @@ def load_products(connection_string) -> list[Product]:
         products.append(product)
 
     return products
+
+
+def load_favorite_products(connection_string) -> list[Product]:
+    '''
+    Load favorite products from the MongoDB database.
+    Args:
+        connection_string: MongoDB connection URI.
+    Returns:
+        A list of Product objects representing the favorite products in the database.'''
+    client = MongoClient(connection_string)
+    db = client["TestAgentDataBase"]
+    favorites_collection = db["Favorites"]
+
+    favorites: list[Product] = []
+    for doc in favorites_collection.find():
+        product = Product(
+            product_id=doc['product_id'],
+            product_name=doc['product_name'],
+            category=doc['category'],
+            price_usd=doc['price_usd'],
+            inventory=doc['inventory'],
+            brand=doc['brand'],
+            rating=doc['rating']
+        )
+        favorites.append(product)
+
+    return favorites

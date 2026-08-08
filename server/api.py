@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from agent.tools import load_products
-from utils.utils import load_products, load_orders
+from utils.utils import load_products, load_orders, load_favorite_products
 
 from objects.Order import Order
 from objects.Product import Product
@@ -30,13 +30,18 @@ agent = Agent()  # Initialize the agent with the appropriate LLM
 
 @app.get('/orders', response_model=list[Order])
 def get_orders() -> list[Order]:
-    """Return order records from the orders.csv table."""
+    """Return order records from the Orders collection."""
     return load_orders(connection_string)
 
 @app.get('/products', response_model=list[Product])
 def get_products() -> list[Product]:
-    """Return product records from the products.csv table."""
+    """Return product records from the Products collection."""
     return load_products(connection_string)
+
+@app.get('/favorites', response_model=list[Product])
+def get_favorite_products() -> list[Product]:
+    """Return favorite product records from the Favorites collection."""
+    return load_favorite_products(connection_string)
 
 @app.post('/query')
 def query_agent(query: QueryRequest):
